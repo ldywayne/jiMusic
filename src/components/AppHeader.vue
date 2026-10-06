@@ -1,85 +1,80 @@
 <script setup lang="ts">
 import AppIcon from './soundboard/AppIcon.vue'
 </script>
+
 <template>
   <header class="header">
     <div class="header-inner">
-      <a class="brand" href="#main-content" aria-label="鸡乐盒首页"
-        ><span class="brand-mark"><AppIcon name="music" /></span
-        ><span>鸡乐盒<span class="brand-pro">pro</span></span></a
-      >
-      <a class="library-link" href="#sound-library">音效库</a
-      ><span class="header-tagline">一点声音，很多快乐</span>
+      <a class="mobile-brand" href="#main-content">
+        <span class="brand-mark"><AppIcon name="music" /></span>鸡乐盒
+      </a>
+      <span class="page-title">发现声音</span>
+      <span class="header-tagline"><AppIcon name="headphones" />戴上耳机，听点快乐</span>
     </div>
   </header>
 </template>
+
 <style scoped>
 .header {
+  background: var(--surface);
   border-bottom: 1px solid var(--line);
-  background: #ffffff;
 }
 .header-inner {
-  max-width: 1180px;
-  padding: 0 32px;
-  min-height: 76px;
+  max-width: 1240px;
+  min-height: 72px;
+  padding: 0 36px;
   margin: auto;
   display: flex;
   align-items: center;
-  gap: 56px;
+  justify-content: space-between;
+  gap: 20px;
 }
-.brand {
+.page-title {
+  font-size: 17px;
+  font-weight: 700;
+}
+.header-tagline {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.header-tagline :deep(svg) {
+  width: 16px;
+  height: 16px;
+}
+.mobile-brand {
+  display: none;
+  align-items: center;
+  gap: 9px;
   font-size: 20px;
   font-weight: 800;
-  color: var(--ink);
 }
 .brand-mark {
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 11px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
   background: var(--accent);
   color: white;
 }
-.brand-pro {
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--accent);
-  margin-left: 6px;
-  background: #efeafb;
-  padding: 3px 6px;
-  border-radius: 5px;
-  vertical-align: middle;
-}
-.library-link {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--accent);
-  align-self: stretch;
-  display: flex;
-  align-items: center;
-  border-bottom: 2px solid var(--accent);
-  padding: 2px 6px 0;
-}
-.header-tagline {
-  margin-left: auto;
-  font-size: 11px;
-  color: #97929f;
+@media (max-width: 900px) {
+  .mobile-brand {
+    display: flex;
+  }
+  .page-title {
+    display: none;
+  }
 }
 @media (max-width: 600px) {
   .header-inner {
-    min-height: 65px;
-    padding: 0 20px;
-    gap: 25px;
+    min-height: 64px;
+    padding: 0 18px;
   }
   .header-tagline {
-    display: none;
-  }
-  .library-link {
-    margin-left: auto;
+    font-size: 11px;
   }
 }
 </style>

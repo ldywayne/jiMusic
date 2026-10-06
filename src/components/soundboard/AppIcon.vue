@@ -1,8 +1,23 @@
 <script setup lang="ts">
 defineProps<{
-  name: 'play' | 'pause' | 'stop' | 'search' | 'heart' | 'volume' | 'shuffle' | 'music' | 'close'
+  name:
+    | 'play'
+    | 'pause'
+    | 'stop'
+    | 'search'
+    | 'heart'
+    | 'volume'
+    | 'shuffle'
+    | 'music'
+    | 'close'
+    | 'disc'
+    | 'grid'
+    | 'headphones'
 }>()
 const paths = {
+  disc: 'M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0ZM15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6 12a6 6 0 0 1 6-6M18 12a6 6 0 0 1-6 6',
+  grid: 'M3 3h7v7H3ZM14 3h7v7h-7ZM3 14h7v7H3ZM14 14h7v7h-7Z',
+  headphones: 'M3 14v-3a9 9 0 0 1 18 0v3M3 13h4v8H3ZM17 13h4v8h-4Z',
   play: 'm9 5 11 7-11 7Z',
   pause: 'M8 5v14M16 5v14',
   stop: 'M6 6h12v12H6Z',

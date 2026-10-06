@@ -1,0 +1,297 @@
+[
+  {
+    "file": "ay.mp3",
+    "decodedSeconds": 0.6791875,
+    "sha256": "594f45e5a1cb9129bb7832391926cb0092d17125521d562b954ad76694dc7872"
+  },
+  {
+    "file": "Baby鸡.mp3",
+    "decodedSeconds": 9.124,
+    "sha256": "4faa81ee64ecc16a569d067114867eeff9668fc81edef70456a48fcbcbbc6e96"
+  },
+  {
+    "file": "bbj.m4a",
+    "decodedSeconds": 145.28727083333334,
+    "sha256": "02f7cff8bc30718e29b334758ec3258cffc660e2666c59f4088e439b9439cbee"
+  },
+  {
+    "file": "djh.mp3",
+    "decodedSeconds": 0.36572916666666666,
+    "sha256": "72e3fd69650fa5ab0c2dbb585f3a4f7744cc25d877bb0607faf79d967944a15f"
+  },
+  {
+    "file": "djj.m4a",
+    "decodedSeconds": 17.136333333333333,
+    "sha256": "f7ad6072505a3c6c9d905af11f94795dfb6e7ec47fe414bcfc2e767313a85dbc"
+  },
+  {
+    "file": "esj.wav",
+    "decodedSeconds": 20.852,
+    "sha256": "af823cb5c43848df6dfa8e7fc37efadc90c72fe7596ccd79dc83ad0bd9210419"
+  },
+  {
+    "file": "hh.mp3",
+    "decodedSeconds": 1.1232708333333334,
+    "sha256": "607423f6eaa0a6651021a647709f61b7826d414d22cf97443ca4874661e3e97e"
+  },
+  {
+    "file": "hxj.m4a",
+    "decodedSeconds": 37.3376875,
+    "sha256": "6a77abf83e79e98608a8cdb5704c4b72415ed025534616f4f1335b8208ae90c7"
+  },
+  {
+    "file": "j.mp3",
+    "decodedSeconds": 0.36572916666666666,
+    "sha256": "a05f5addec9a7f5d7df9a73098f09bc67b06ca981c7a4dee757e3ff4944d431a"
+  },
+  {
+    "file": "jhj.m4a",
+    "decodedSeconds": 16.532625,
+    "sha256": "71699db7769bfcfa5e0fad64f2fdde30315c0cadb057ba1004bbf94bd046d4fd"
+  },
+  {
+    "file": "jjj.m4a",
+    "decodedSeconds": 7.6858125,
+    "sha256": "b11f4102e9dfa1a02fd7982ffb790b36190fe7561adb9a02313cd270ec385fa4"
+  },
+  {
+    "file": "jnj.m4a",
+    "decodedSeconds": 54.961645833333336,
+    "sha256": "d651d95b69660c93ad8445748aa3e525f2611aae75cfe0ff12f86bd22bb306b0"
+  },
+  {
+    "file": "jntm.mp3",
+    "decodedSeconds": 4.466958333333333,
+    "sha256": "2016e941d786c611e0965adf5b4a88df4d35091bb2be6eac9f7e32403332c2a3"
+  },
+  {
+    "file": "jtm.m4a",
+    "decodedSeconds": 9.125458333333333,
+    "sha256": "6ef431d54c4853aa40920be2135c0dd0980611c5180a316a7405bc0f20aba2a6"
+  },
+  {
+    "file": "lq.wav",
+    "decodedSeconds": 0.32,
+    "sha256": "4325bd06b4d46cb2252e600778ea46204196a44fbca4336645c2f75c0f606089"
+  },
+  {
+    "file": "m.mp3",
+    "decodedSeconds": 0.49633333333333335,
+    "sha256": "8fab6160bb4c0db4d63de534d666b7deb54b1d307caa4e32bd6a06373e2ae416"
+  },
+  {
+    "file": "mck.mp3",
+    "decodedSeconds": 0.6008333333333333,
+    "sha256": "4bcc123745a48881488ca27b056d2eebcfdf49329dcd3e5f8ce6bef939bc4d2e"
+  },
+  {
+    "file": "mrj.mp3",
+    "decodedSeconds": 51.8530625,
+    "sha256": "a9c9ef56ecfb7c44d16abfe5e4d2a2f3c001536c2d729ebc21820ad982950b14"
+  },
+  {
+    "file": "n.mp3",
+    "decodedSeconds": 0.2612291666666667,
+    "sha256": "3f1d50778b29eabb6492020626f7439b843ff7f3eb09b540063e900348a5c42a"
+  },
+  {
+    "file": "ngm.mp3",
+    "decodedSeconds": 1.6457291666666667,
+    "sha256": "84e1d4e74c54a16e34c8c67b6ece9d4806c732c1bedaf917b620a36fd822c192"
+  },
+  {
+    "file": "ngmhhy.mp3",
+    "decodedSeconds": 3.89225,
+    "sha256": "dab9a5af2c1529f3620e7f88fcc94f63ca854164eac964891f6d85cc4a319a0d"
+  },
+  {
+    "file": "nhf.mp3",
+    "decodedSeconds": 1.410625,
+    "sha256": "4e701125ee725cd89f75396fd7aa9aecc21eca47fedd57f3e75e990abec74050"
+  },
+  {
+    "file": "qm.wav",
+    "decodedSeconds": 0.6530625,
+    "sha256": "ff8dec0d2908845a48805df1f421a976a1ff8774b1ffea7e4c2db4b98c3d53c2"
+  },
+  {
+    "file": "rp.mp3",
+    "decodedSeconds": 0.2873541666666667,
+    "sha256": "c3875c4d2913583ca018b7c2eb25852096abb97e8b5f624f21d1d25fd2387df5"
+  },
+  {
+    "file": "rup.mp3",
+    "decodedSeconds": 9.456,
+    "sha256": "232f93a42ecde2c14d3c8c502d24fc6d3091712f9924008b6a77fca2e42ff99b"
+  },
+  {
+    "file": "t.mp3",
+    "decodedSeconds": 0.33960416666666665,
+    "sha256": "3600c9a642532f826023f3bc50f5bda076599549ef928408926c97a126613157"
+  },
+  {
+    "file": "thj.m4a",
+    "decodedSeconds": 19.992395833333333,
+    "sha256": "27fb9fa09a119488bdf6436cbc11abdfbf3bb5fc506423d56c1c98eb2dd0e95a"
+  },
+  {
+    "file": "ws.wav",
+    "decodedSeconds": 0.2575208333333333,
+    "sha256": "ebd1afcf57cbe38d2fb53b9e034ee7587c42edeeb9a9a128c7279ac53a25a247"
+  },
+  {
+    "file": "xjj.m4a",
+    "decodedSeconds": 36.037375,
+    "sha256": "7c67bd1088f229218c2510b074ce3ae8660495882431f33a457eabf02dc5b047"
+  },
+  {
+    "file": "xnj.m4a",
+    "decodedSeconds": 24.891791666666666,
+    "sha256": "33328ce5e4d14415ace492f418a9def81714cc1d03fd0ce19f54cf267ee04785"
+  },
+  {
+    "file": "xs.mp3",
+    "decodedSeconds": 3.134708333333333,
+    "sha256": "073bc7b025ae8c255ce7fe2e076027eaa9ce5d5a831900140f22817734a378be"
+  },
+  {
+    "file": "xxj.wav",
+    "decodedSeconds": 14.205,
+    "sha256": "e532dbc06f252838be67b7050f2a1fe94507f270f4810100fef9ddf44b2ae7e1"
+  },
+  {
+    "file": "yhhmgn.mp3",
+    "decodedSeconds": 3.89225,
+    "sha256": "8506746555a319aabde5a008104353d5260e67e7963a5992537d8158a838df0c"
+  },
+  {
+    "file": "yyj.m4a",
+    "decodedSeconds": 24.171979166666667,
+    "sha256": "61138c2d7d93e6d2dfec29c2b60100abf78146028536c8adf03ed019c7d1fd30"
+  },
+  {
+    "file": "zdj.m4a",
+    "decodedSeconds": 35.015708333333336,
+    "sha256": "4b6d6239914142806a612c0b3d09fe93c7bc34e261d5140a184905c6f89e3379"
+  },
+  {
+    "file": "你干嘛手机铃声.mp3",
+    "decodedSeconds": 70.28029166666667,
+    "sha256": "699f8691a876164e5aa91dc726d386e6c2198586394421cc4dee787b81869c7c"
+  },
+  {
+    "file": "哇呵呵.wav",
+    "decodedSeconds": 1.7890208333333333,
+    "sha256": "22671c91a8581453e9df4852b879c036afcb17099cfa3da7c1f925e69a321c26"
+  },
+  {
+    "file": "唱.mp3",
+    "decodedSeconds": 0.5485833333333333,
+    "sha256": "0dbf86786967d9a085c896d3f4a551b5d46e73e8784c16a9a99445029b47da9f"
+  },
+  {
+    "file": "喜欢.mp3",
+    "decodedSeconds": 0.39185416666666667,
+    "sha256": "afc735e5e77b638f86923526c986fc4509c330442c5b1de793539b91b393b034"
+  },
+  {
+    "file": "坤坤.mp3",
+    "decodedSeconds": 0.6008333333333333,
+    "sha256": "f5ade23a9f5c4337039b86e046ff8f7ccb98ed33c73fde2a5d760c3978703556"
+  },
+  {
+    "file": "天鸡预报.mp3",
+    "decodedSeconds": 34.7835,
+    "sha256": "25c030a3e13aaeec095de631abd63532c98eebcd1a1f42c6f6711c334ced2553"
+  },
+  {
+    "file": "学鸡叫.mp3",
+    "decodedSeconds": 18.1565625,
+    "sha256": "4ff1f0ca97c4d66370e1193d33c2459369532860290b55dfb90fb0362749fa2d"
+  },
+  {
+    "file": "挤尼太霉.mp3",
+    "decodedSeconds": 21.87175,
+    "sha256": "dcf574576e941093f51f07359539bed5ce7567ac970ac22b99231251b628e4f2"
+  },
+  {
+    "file": "新说唱Rap.mp3",
+    "decodedSeconds": 69.86885416666667,
+    "sha256": "c899b757d0c740dfc822fef3dd5e3b48029b24b828c466a2c8ff3baca1d3483f"
+  },
+  {
+    "file": "欢乐斗鸡主.mp3",
+    "decodedSeconds": 33.001375,
+    "sha256": "bdd05fa914f6736ab9e0ebc570782e0d3adc56384cc1abb0b0054e88bc34bed1"
+  },
+  {
+    "file": "爱坤的回忆.mp3",
+    "decodedSeconds": 40.100875,
+    "sha256": "52a8d896478b54c876136b4f001d799433538527ebaf348ae5dc1c7fa07f7928"
+  },
+  {
+    "file": "猪猪侠(鲲版).mp3",
+    "decodedSeconds": 36.864,
+    "sha256": "a5a2c7c783a9ca13ce7f203498cb5daa3d7ff650d7c6ec0d25f8865351b2404f"
+  },
+  {
+    "file": "白娘鸡.mp3",
+    "decodedSeconds": 10.3314375,
+    "sha256": "c966333c4427a6a3813eea9f8f8970976f13747ddfbb21e618cef3dd60db3b85"
+  },
+  {
+    "file": "老虎鸡.mp3",
+    "decodedSeconds": 18.808166666666665,
+    "sha256": "6f07c4a55647cd99ffd56745cf3440ece689b35400069a799baf0d21ef9f2a8e"
+  },
+  {
+    "file": "跳.mp3",
+    "decodedSeconds": 0.31347916666666664,
+    "sha256": "1cd36d6cb755966690e7586cbbca67e054199847e0b7cc41125e6c506a6a9146"
+  },
+  {
+    "file": "鲲乐净土.mp3",
+    "decodedSeconds": 31.488,
+    "sha256": "07ca9a92ce9c23cea8b0fe7f202209e24dd617b91da7e1494185bf456458f6ab"
+  },
+  {
+    "file": "鲲物.mp3",
+    "decodedSeconds": 33.024,
+    "sha256": "8da8ff9ac6ab8d5c1ebd0b6c49aece30f2e8f5fbb7c2e3148d3e83d1ce8bf6d3"
+  },
+  {
+    "file": "鸡r3.mp3",
+    "decodedSeconds": 12.352,
+    "sha256": "9ad7e58495f030c59e5d71cabd08fd0f9a451477cf127520b6c4557b24bfa17d"
+  },
+  {
+    "file": "鸡上学.mp3",
+    "decodedSeconds": 25.031125,
+    "sha256": "7e8f4bdcba4aee321178e106018c45fd4f02c09b295f0f6aefef6b94f73feab2"
+  },
+  {
+    "file": "鸡你太美.mp3",
+    "decodedSeconds": 29.824,
+    "sha256": "8b28488ca367af1e0b3f375e7f2e642f5b075c037801c46e2ab0cec8f56701f4"
+  },
+  {
+    "file": "鸡你实在太煤.mp3",
+    "decodedSeconds": 15.277291666666667,
+    "sha256": "3bd2176546ef0fe70ed63728834e6562e5a9bfe6080385aa313b16c1889ae5f4"
+  },
+  {
+    "file": "鸡塘月色.mp3",
+    "decodedSeconds": 21.662770833333333,
+    "sha256": "53ec6a911ccedeceaa3241eec7d1ec89f5f3c8febd10f5fa59ced6f48c362a5a"
+  },
+  {
+    "file": "鸡年等一回.mp3",
+    "decodedSeconds": 27.30666666666667,
+    "sha256": "1cfc32b6b28c46b9e623906df8704df266efe350dd5ed0eca9f1622798b75507"
+  },
+  {
+    "file": "鸡鸡鸡太美.mp3",
+    "decodedSeconds": 22.847,
+    "sha256": "ed0f9e7d6ea819684c32b2ac8ae5cacd8a69feb8bfef0ac01ca0e105b6992d24"
+  }
+]

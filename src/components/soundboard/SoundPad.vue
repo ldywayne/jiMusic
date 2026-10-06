@@ -15,8 +15,8 @@ defineEmits<{ play: [sound: Sound]; favorite: [id: string] }>()
   <div
     class="sound-pad"
     :class="[
-      { active, featured },
-      sound.category === '鬼畜音效' ? 'mint' : sound.category === '整活单曲' ? 'peach' : 'lavender',
+      { active, featured, playing: active && playing },
+      sound.category === '鬼畜音效' ? 'mint' : sound.category === '整活单曲' ? 'lavender' : 'peach',
     ]"
   >
     <button
@@ -26,20 +26,23 @@ defineEmits<{ play: [sound: Sound]; favorite: [id: string] }>()
       @click="$emit('play', sound)"
     >
       <template v-if="featured">
-        <span class="pad-key">{{ sound.shortcut }}</span
-        ><span class="signature">{{ sound.name }}</span>
+        <span class="pad-key">{{ sound.shortcut }}</span>
+        <span class="signature">{{ sound.name }}</span>
         <span class="pad-caption"
           >{{ active && playing ? '正在播放' : '点击播放'
           }}<AppIcon :name="active && playing ? 'volume' : 'play'"
         /></span>
       </template>
       <template v-else>
-        <span class="sound-symbol"
-          ><AppIcon
-            :name="active && playing ? 'volume' : sound.category === '整活单曲' ? 'music' : 'play'"
-        /></span>
-        <span class="sound-name">{{ sound.name }}</span
-        ><span class="sound-category">{{ active && playing ? '正在播放' : sound.category }}</span>
+        <span class="sound-cover">
+          <span class="cover-stamp">{{ sound.category }}</span>
+          <span class="cover-record"
+            ><span class="cover-monogram">{{ sound.name.slice(0, 2) }}</span></span
+          >
+          <span class="cover-play"><AppIcon :name="active && playing ? 'volume' : 'play'" /></span>
+        </span>
+        <span class="sound-name" :title="sound.name">{{ sound.name }}</span>
+        <span class="sound-category">{{ active && playing ? '正在播放' : sound.category }}</span>
       </template>
     </button>
     <button
@@ -57,79 +60,130 @@ defineEmits<{ play: [sound: Sound]; favorite: [id: string] }>()
 
 <style scoped>
 .sound-pad {
+  --cover-tint: #f0d9d0;
+  --cover-ink: #845d50;
   position: relative;
   min-width: 0;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  background: white;
-  transition:
-    border-color 120ms,
-    background-color 120ms;
 }
-.sound-pad:hover {
-  border-color: #b4a6e7;
+.sound-pad.mint {
+  --cover-tint: #cde8e5;
+  --cover-ink: #3f706b;
 }
-.sound-pad.active {
-  border-color: var(--accent);
-  background: #f4f1ff;
-  box-shadow: inset 0 0 0 1px var(--accent);
+.sound-pad.lavender {
+  --cover-tint: #dfdced;
+  --cover-ink: #6c6185;
 }
 .pad-trigger {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  height: 140px;
-  padding: 18px;
+  padding: 0 0 4px;
   border: 0;
   background: transparent;
   text-align: left;
-  border-radius: inherit;
+  border-radius: 10px;
 }
-.sound-symbol {
+.sound-cover {
+  position: relative;
   display: grid;
   place-items: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  color: #7660bf;
-  background: #f0ebfc;
-  margin-bottom: 13px;
+  width: 100%;
+  aspect-ratio: 1.3;
+  border-radius: 12px;
+  background: var(--cover-tint);
+  overflow: hidden;
 }
-.mint .sound-symbol {
-  color: #37886d;
-  background: #e8f5ef;
+.cover-stamp {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 1;
+  color: var(--cover-ink);
+  font-size: 10px;
+  font-weight: 650;
 }
-.peach .sound-symbol {
-  color: #b56642;
-  background: #fff0e8;
+.cover-record {
+  display: grid;
+  place-items: center;
+  width: 69%;
+  aspect-ratio: 1;
+  margin-top: 16%;
+  border: 5px solid #2d2d31;
+  border-radius: 50%;
+  background: repeating-radial-gradient(circle, #2d2d31 0 2px, #444449 3px 4px);
+  transform: rotate(-12deg);
+}
+.cover-monogram {
+  display: grid;
+  place-items: center;
+  width: 48%;
+  aspect-ratio: 1;
+  padding: 4px;
+  border-radius: 50%;
+  background: var(--cover-tint);
+  color: var(--cover-ink);
+  font-size: clamp(14px, 1.6vw, 21px);
+  font-weight: 800;
+  white-space: nowrap;
+}
+.cover-play {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: var(--accent);
+  background: white;
+}
+.cover-play :deep(svg) {
+  width: 16px;
+  height: 16px;
 }
 .sound-name {
   max-width: 100%;
-  font-size: 15px;
-  font-weight: 650;
-  line-height: 1.4;
+  margin-top: 11px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
 }
 .sound-category {
-  margin-top: 5px;
-  font-size: 11px;
+  margin-top: 3px;
   color: var(--muted);
+  font-size: 11px;
+}
+.sound-pad.active .sound-cover {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+.sound-pad.active .sound-name,
+.playing .sound-category {
+  color: var(--accent);
+}
+.pad-trigger:hover .sound-name {
+  color: var(--accent);
+}
+.playing .cover-play {
+  color: white;
+  background: var(--accent);
 }
 .favorite-button {
   position: absolute;
-  top: 9px;
-  right: 9px;
-  width: 36px;
-  height: 36px;
+  top: 4px;
+  right: 4px;
   display: grid;
   place-items: center;
-  background: transparent;
-  color: #9b9cac;
+  width: 36px;
+  height: 36px;
   border: 0;
-  border-radius: 8px;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--cover-ink);
 }
 .favorite-button :deep(svg) {
   width: 16px;
@@ -138,73 +192,80 @@ defineEmits<{ play: [sound: Sound]; favorite: [id: string] }>()
 .favorite-button:hover,
 .favorite-button.saved {
   color: var(--accent);
-  background: #f4f1ff;
+  background: #ffffffc7;
 }
 .favorite-button.saved :deep(path) {
-  fill: #e2d9ff;
+  fill: var(--accent);
 }
 .featured {
-  background: #eee9fb;
-  border-color: transparent;
-}
-.featured:nth-child(2) {
-  background: #e6edf9;
-}
-.featured:nth-child(3) {
-  background: #e5f2ed;
-}
-.featured:nth-child(4) {
-  background: #fbece3;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #f9f9fb;
 }
 .featured .pad-trigger {
-  height: 160px;
-  padding: 18px 22px;
+  position: relative;
+  height: 126px;
+  padding: 16px 20px;
+  border-radius: inherit;
+}
+.featured:hover {
+  border-color: #e4bfc2;
+}
+.featured.active {
+  border-color: var(--accent);
+  background: var(--accent-soft);
 }
 .pad-key {
+  position: absolute;
+  top: 14px;
+  right: 16px;
   display: grid;
   place-items: center;
-  width: 23px;
-  height: 23px;
+  width: 22px;
+  height: 22px;
+  border: 1px solid #e5e5e9;
   border-radius: 5px;
-  border: 1px solid #ffffffb3;
+  background: white;
+  color: var(--muted);
   font-size: 11px;
-  color: #64657b;
 }
 .signature {
-  align-self: center;
-  font-size: 56px;
+  font-size: 44px;
   font-weight: 800;
-  line-height: 1.2;
-  letter-spacing: -3px;
+  line-height: 1.3;
 }
 .pad-caption {
-  margin-top: auto;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
+  margin-top: auto;
+  color: var(--muted);
   font-size: 11px;
-  color: #6d6c80;
   white-space: nowrap;
 }
 .pad-caption :deep(svg) {
   width: 14px;
   height: 14px;
 }
-.featured.active {
-  border-color: var(--accent);
+.featured.active .signature,
+.featured.active .pad-caption {
+  color: var(--accent);
 }
-@media (max-width: 600px) {
-  .pad-trigger {
-    height: 130px;
-    padding: 15px;
-  }
+@media (max-width: 700px) {
   .featured .pad-trigger {
-    height: 138px;
-    padding: 12px;
+    height: 112px;
+    padding: 12px 14px;
   }
   .signature {
-    font-size: 43px;
+    font-size: 38px;
+  }
+  .pad-key {
+    top: 9px;
+    right: 9px;
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
   }
   .pad-caption {
     font-size: 10px;
@@ -212,13 +273,28 @@ defineEmits<{ play: [sound: Sound]; favorite: [id: string] }>()
 }
 @media (max-width: 420px) {
   .featured .pad-trigger {
-    padding: 9px;
+    height: 106px;
+    padding: 10px;
   }
-  .pad-caption {
-    font-size: 10px;
+  .pad-key {
+    position: static;
+    width: 16px;
+    height: 16px;
+    font-size: 9px;
+  }
+  .signature {
+    font-size: 33px;
+    line-height: 1.3;
   }
   .pad-caption :deep(svg) {
     display: none;
+  }
+  .cover-stamp {
+    top: 10px;
+    left: 10px;
+  }
+  .sound-name {
+    font-size: 13px;
   }
 }
 </style>

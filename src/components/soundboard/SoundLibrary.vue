@@ -123,6 +123,7 @@ onMounted(() => {
 .filters {
   display: flex;
   align-items: center;
+  min-width: 0;
 }
 .library-heading,
 .filter-row {
@@ -133,67 +134,81 @@ onMounted(() => {
   gap: 15px;
 }
 .title-group h2 {
-  font-size: 23px;
+  font-size: 22px;
   font-weight: 750;
 }
 .count {
-  font-size: 12px;
   color: var(--muted);
+  font-size: 12px;
 }
 .search-box {
   display: flex;
   align-items: center;
-  gap: 11px;
-  background: white;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 10px 13px;
-  color: #9695a6;
-  width: 270px;
+  gap: 10px;
+  width: 260px;
+  min-height: 40px;
+  padding: 9px 14px;
+  border: 1px solid #ededf0;
+  border-radius: 24px;
+  background: #f7f7f9;
+  color: var(--muted);
 }
 .search-box:focus-within {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px #6554c015;
+  box-shadow: 0 0 0 3px #d9363e12;
 }
 .search-box :deep(svg) {
-  width: 17px;
-  height: 17px;
+  width: 16px;
+  height: 16px;
 }
 .search-box input {
   min-width: 0;
   width: 100%;
   outline: none;
-  background: transparent;
   border: 0;
+  background: transparent;
   font-size: 12px;
 }
+.search-box input::placeholder {
+  color: var(--muted);
+}
 .filter-row {
-  margin: 22px 0;
+  margin: 16px 0 24px;
+  border-bottom: 1px solid var(--line);
 }
 .filters {
-  gap: 7px;
   flex-wrap: wrap;
+  gap: 24px;
 }
 .filter-button {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
-  background: transparent;
+  gap: 6px;
+  min-height: 44px;
+  padding: 10px 0 13px;
   border: 0;
-  border-radius: 8px;
-  padding: 10px 15px;
-  color: #727385;
-  font-size: 12px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 13px;
   white-space: nowrap;
-  min-height: 40px;
 }
 .filter-button.selected {
-  background: var(--ink);
-  color: white;
+  color: var(--accent);
+  font-weight: 700;
+}
+.filter-button.selected::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--accent);
 }
 .filter-button:hover:not(.selected) {
-  background: #ebe8f4;
   color: var(--ink);
 }
 .filter-button :deep(svg) {
@@ -201,60 +216,71 @@ onMounted(() => {
   height: 14px;
 }
 .filter-button span {
+  display: grid;
+  place-items: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 9px;
+  background: var(--accent-soft);
+  color: var(--accent);
   font-size: 10px;
 }
 .result-count {
-  font-size: 11px;
   color: var(--muted);
+  font-size: 11px;
   white-space: nowrap;
 }
 .sound-grid {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 13px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 22px 18px;
 }
 .empty-state {
+  padding: 60px 20px;
+  border-radius: 12px;
+  background: #f8f8fa;
   text-align: center;
-  padding: 65px 20px;
-  border: 1px dashed #d7d1e6;
-  border-radius: 16px;
 }
 .empty-state :deep(svg) {
-  color: var(--accent);
-  margin-bottom: 13px;
   width: 30px;
   height: 30px;
+  margin-bottom: 13px;
+  color: var(--accent);
 }
 .empty-state h3 {
+  margin-bottom: 8px;
   font-size: 18px;
   font-weight: 650;
-  margin-bottom: 8px;
 }
 .empty-state p,
 .storage-notice {
-  font-size: 13px;
   color: var(--muted);
+  font-size: 13px;
 }
 .text-button {
+  margin-top: 15px;
+  padding: 10px;
   color: var(--accent);
   border: 0;
   background: transparent;
-  margin-top: 15px;
-  padding: 10px;
 }
 .storage-notice {
   margin-bottom: 16px;
 }
-@media (max-width: 1050px) {
+@media (max-width: 1100px) {
   .sound-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 @media (max-width: 700px) {
+  .library {
+    margin-top: 28px;
+  }
   .library-heading {
     align-items: stretch;
     flex-direction: column;
-    gap: 15px;
+    gap: 16px;
   }
   .search-box {
     width: 100%;
@@ -262,24 +288,31 @@ onMounted(() => {
   }
   .title-group {
     justify-content: space-between;
+    gap: 8px;
   }
   .filter-row {
-    align-items: flex-start;
-    gap: 8px;
-    margin: 16px 0;
+    margin: 12px 0 20px;
+  }
+  .filters {
+    width: 100%;
+    flex-wrap: nowrap;
+    gap: 22px;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    padding-bottom: 2px;
   }
   .filter-button {
-    padding: 9px 11px;
+    flex-shrink: 0;
   }
   .result-count {
     display: none;
   }
   .sound-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 10px;
+    gap: 18px 12px;
   }
 }
-@media (max-width: 420px) {
+@media (max-width: 480px) {
   .sound-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

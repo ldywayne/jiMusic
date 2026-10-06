@@ -1,11 +1,15 @@
 :root {
-  --ink: #302c42;
-  --muted: #817c90;
-  --accent: #6956b9;
-  --line: #e9e6f0;
+  --ink: #242529;
+  --muted: #72747d;
+  --accent: #d9363e;
+  --accent-hover: #bf2630;
+  --accent-soft: #fcebec;
+  --line: #ededf0;
+  --surface: #ffffff;
+  --canvas: #ffffff;
   color: var(--ink);
-  background: #f8f9fc;
-  font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: var(--canvas);
+  font-family: 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -52,11 +56,11 @@ a {
 button:focus-visible,
 a:focus-visible,
 input:focus-visible {
-  outline: 3px solid #a68de8;
+  outline: 3px solid #e8878d;
   outline-offset: 3px;
 }
 ::selection {
-  background: #e4dcfa;
+  background: #f9dadd;
 }
 @media (prefers-reduced-motion: reduce) {
   *,

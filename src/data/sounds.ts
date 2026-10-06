@@ -9,11 +9,17 @@ export interface Sound {
 }
 
 // Vite emits these files with production-safe, base-aware asset URLs.
-const assets = import.meta.glob<string>('../res/*.mp3', {
+const assets = import.meta.glob<string>('../res/*.{mp3,m4a,wav}', {
   eager: true,
   query: '?url',
   import: 'default',
 })
+const assetUrls = new Map(
+  Object.entries(assets).map(([path, url]) => [
+    path.slice(path.lastIndexOf('/') + 1, path.lastIndexOf('.')),
+    url,
+  ]),
+)
 
 const entries: [string, string, SoundCategory][] = [
   ['j', '鸡', '经典语录'],
@@ -78,7 +84,7 @@ const entries: [string, string, SoundCategory][] = [
 ]
 
 export const sounds: readonly Sound[] = entries.map(([id, name, category], index) => {
-  const url = assets[`../res/${id}.mp3`]
+  const url = assetUrls.get(id)
   if (!url) throw new Error(`Missing sound asset: ${id}`)
   return { id, name, category, url, shortcut: index < 4 ? String(index + 1) : undefined }
 })
