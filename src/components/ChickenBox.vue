@@ -1,384 +1,348 @@
-<template>
-  <div class="chicken-box">
-    <a-card class="header-section" :bordered="false">
-      <div class="title">功能区域</div>
-      <h1 class="main-title">鸡乐盒</h1>
-      <div class="control-buttons">
-        <a-button type="primary" class="start-btn" @click="startFunction" :loading="isPlaying">
-          开始
-        </a-button>
-        <a-button danger class="stop-btn" @click="stopFunction">
-          停止
-        </a-button>
-      </div>
-    </a-card>
+<script setup lang="ts">
+import { onMounted, onUnmounted } from 'vue'
+import { featuredSounds, sounds } from '@/data/sounds'
+import { useSoundPlayer } from '@/composables/useSoundPlayer'
+import SoundPad from './soundboard/SoundPad.vue'
+import SoundLibrary from './soundboard/SoundLibrary.vue'
+import PlayerBar from './soundboard/PlayerBar.vue'
+import AppIcon from './soundboard/AppIcon.vue'
 
-    <div class="function-grid">
-      <div class="button-row">
-        <a-button class="function-btn" @click="playSound('j')">鸡</a-button>
-        <a-button class="function-btn" @click="playSound('n')">你</a-button>
-        <a-button class="function-btn" @click="playSound('t')">太</a-button>
-        <a-button class="function-btn" @click="playSound('m')">美</a-button>
+const {
+  currentSound,
+  status,
+  currentTime,
+  duration,
+  volume,
+  error,
+  play,
+  stop,
+  toggle,
+  setVolume,
+  seek,
+} = useSoundPlayer()
+
+function playRandom() {
+  const candidates = sounds.filter((sound) => sound.id !== currentSound.value?.id)
+  const sound = candidates[Math.floor(Math.random() * candidates.length)]
+  if (sound) play(sound)
+}
+function onKeydown(event: KeyboardEvent) {
+  const target = event.target
+  if (
+    event.repeat ||
+    event.ctrlKey ||
+    event.altKey ||
+    event.metaKey ||
+    (target instanceof HTMLElement && target.closest('input, textarea, select, [contenteditable]'))
+  )
+    return
+  const sound = featuredSounds.find((item) => item.shortcut === event.key)
+  if (sound) {
+    event.preventDefault()
+    play(sound)
+  } else if (event.code === 'Space' && currentSound.value) {
+    // Space keeps its native activation behavior on focused buttons and links.
+    if (target instanceof HTMLElement && target.closest('button, a')) return
+    event.preventDefault()
+    toggle()
+  } else if (event.key === 'Escape') stop()
+}
+onMounted(() => window.addEventListener('keydown', onKeydown))
+onUnmounted(() => window.removeEventListener('keydown', onKeydown))
+</script>
+
+<template>
+  <div class="soundboard">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <span class="welcome"><span class="welcome-dot"></span>你的快乐，随时在线</span>
+        <h1 id="hero-title">把快乐，按出来。</h1>
+        <p class="hero-description">熟悉的声音，全新的快乐。<br />点一下，给生活加点 BGM。</p>
+        <button class="random-button" @click="playRandom">
+          <AppIcon name="shuffle" />随便听听
+        </button>
       </div>
-      <div class="button-row">
-        <a-button class="function-btn" @click="playSound('唱')">唱</a-button>
-        <a-button class="function-btn" @click="playSound('跳')">跳</a-button>
-        <a-button class="function-btn" @click="playSound('rp')">rap</a-button>
-        <a-button class="function-btn" @click="playSound('lq')">篮球</a-button>
+      <div class="hero-art" aria-hidden="true">
+        <span class="art-note note-one">♪</span><span class="art-note note-two">♫</span>
+        <div class="record-sleeve">
+          <div class="record">
+            <div class="record-label"><AppIcon name="music" /></div>
+          </div>
+          <span class="sleeve-label">快乐制造机</span>
+          <div class="sleeve-stripes"><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+        <span class="art-caption">生活需要一点节奏</span>
       </div>
-      <div class="button-row">
-        <a-button class="function-btn" @click="playSound('mck')">music</a-button>
-        <a-button class="function-btn" @click="playSound('xs')">笑死</a-button>
-        <a-button class="function-btn" @click="playSound('哇呵呵')">哇呵呵</a-button>
-        <a-button class="function-btn" @click="playSound('喜欢')">喜欢</a-button>
+    </section>
+    <section class="signature-section" aria-labelledby="signature-title">
+      <div class="section-heading">
+        <h2 id="signature-title">经典四连</h2>
+        <span class="keyboard-tip"
+          >键盘 <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> <kbd>4</kbd>，快乐即刻开场</span
+        ><span class="mobile-tip">点击即播，再点重播</span>
       </div>
-      <div class="button-row">
-        <a-button class="function-btn" @click="playSound('qm')">制作人</a-button>
-        <a-button class="function-btn" @click="playSound('djh')">大家好</a-button>
-        <a-button class="function-btn" @click="playSound('ws')">我是</a-button>
-        <a-button class="function-btn" @click="playSound('坤坤')">鲲鲲</a-button>
+      <div class="signature-grid">
+        <SoundPad
+          v-for="sound in featuredSounds"
+          :key="sound.id"
+          :sound="sound"
+          featured
+          :active="currentSound?.id === sound.id"
+          :playing="status === 'playing' && currentSound?.id === sound.id"
+          @play="play"
+        />
       </div>
-      <div class="button-row">
-        <a-button class="function-btn" @click="playSound('ngm')">你干嘛~</a-button>
-        <a-button class="function-btn" @click="playSound('hh')">哈哈</a-button>
-        <a-button class="function-btn" @click="playSound('ay')">哎哟</a-button>
-        <a-button class="function-btn" @click="playSound('nhf')">你好烦~</a-button>
-      </div>
-      <div class="button-row">
-        <a-button class="function-btn wide-btn" @click="playSound('jntm')">开始吟唱</a-button>
-        <a-button class="function-btn" @click="playSound('ngmhhy')">你干嘛哈哈哟</a-button>
-        <a-button class="function-btn" @click="playSound('yhhmgn')">哟哈哈嘛干你</a-button>
-      </div>
-      <div class="button-row">
-        <a-button class="function-btn" @click="playSound('esj')">二手鸡</a-button>
-        <a-button class="function-btn" @click="playSound('rup')">rap鸡</a-button>
-        <a-button class="function-btn" @click="playSound('djj')">DJ鸡</a-button>
-        <a-button class="function-btn" @click="playSound('xxj')">谢谢鸡</a-button>
-      </div>
-      <div class="button-row">
-        <a-button class="function-btn" @click="playSound('jhj')">惊魂鸡</a-button>
-        <a-button class="function-btn" @click="playSound('xjj')">仙剑鸡</a-button>
-        <a-button class="function-btn" @click="playSound('xnj')">新年鸡</a-button>
-        <a-button class="function-btn" @click="playSound('zdj')">战斗鸡</a-button>
-      </div>
-      <div class="button-row">
-        <a-button class="function-btn" @click="playSound('thj')">桃花鸡</a-button>
-        <a-button class="function-btn" @click="playSound('mrj')">某人鸡</a-button>
-        <a-button class="function-btn" @click="playSound('jnj')">江南鸡</a-button>
-        <a-button class="function-btn" @click="playSound('jjj')">尖叫鸡</a-button>
-      </div>
-      <div class="button-row">
-        <a-button class="function-btn" @click="playSound('bbj')">baby鸡</a-button>
-        <a-button class="function-btn" @click="playSound('hxj')">欢喜鸡</a-button>
-        <a-button class="function-btn" @click="playSound('yyj')">耶耶鸡</a-button>
-        <a-button class="function-btn" @click="playSound('jtm')">鸡太美</a-button>
-      </div>
-      <!-- 更新部分 -->
-      <div class="button-row">
-        <a-button class="function-btn" @click="playSound('白娘鸡')">新鸡娘子</a-button>
-        <a-button class="function-btn" @click="playSound('欢乐斗鸡主')">欢乐斗鸡主</a-button>
-        <a-button class="function-btn" @click="playSound('鸡鸡鸡太美')">鸡鸡鸡太美</a-button>
-        <a-button class="function-btn" @click="playSound('鸡你实在太煤')">鸡你实在太煤</a-button>
-      </div>
-      <div class="button-row">
-        <a-button class="function-btn" @click="playSound('鸡你太美')">鸡你太美</a-button>
-        <a-button class="function-btn" @click="playSound('鸡年等一回')">鸡年等一回</a-button>
-        <a-button class="function-btn" @click="playSound('鸡上学')">鸡上学</a-button>
-        <a-button class="function-btn" @click="playSound('鸡塘月色')">鸡塘月色</a-button>
-      </div>
-      <div class="button-row">
-        <a-button class="function-btn" @click="playSound('鸡r3')">鸡r3</a-button>
-        <a-button class="function-btn" @click="playSound('挤尼太霉')">挤尼太霉</a-button>
-        <a-button class="function-btn" @click="playSound('鲲乐净土')">鲲乐净土</a-button>
-        <a-button class="function-btn" @click="playSound('鲲物')">鲲物</a-button>
-      </div>
-      <div class="button-row">
-        <a-button class="function-btn" @click="playSound('老虎鸡')">老虎鸡</a-button>
-        <a-button class="function-btn" @click="playSound('你干嘛手机铃声')">手鸡铃声</a-button>
-        <a-button class="function-btn" @click="playSound('天鸡预报')">天鸡预报</a-button>
-        <a-button class="function-btn" @click="playSound('猪猪侠(鲲版)')">鸡鸡侠</a-button>
-      </div>
-      <div class="button-row">
-        <a-button class="function-btn" @click="playSound('Baby鸡')">Baby鸡2</a-button>
-        <a-button class="function-btn" @click="playSound('学鸡叫')">学鸡叫</a-button>
-        <a-button class="function-btn" @click="playSound('新说唱Rap')">说唱Rap鸡</a-button>
-        <a-button class="function-btn" @click="playSound('爱坤的回忆')">爱坤的回忆</a-button>
-      </div>
-    </div>
-    <audio ref="audioRef" id="audio" src="/src/res/j.mp3" preload="auto"></audio>
+    </section>
+    <SoundLibrary :active-id="currentSound?.id" :playing="status === 'playing'" @play="play" />
+    <p class="board-note">快乐可以很简单。<span>空格暂停 / 继续，Esc 停止播放</span></p>
+    <PlayerBar
+      :sound="currentSound"
+      :status="status"
+      :current-time="currentTime"
+      :duration="duration"
+      :volume="volume"
+      :error="error"
+      @toggle="toggle"
+      @stop="stop"
+      @volume="setVolume"
+      @seek="seek"
+    />
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue'
-import { message } from 'ant-design-vue'
-
-const isPlaying = ref(false)
-const audioRef = ref<HTMLAudioElement | null>(null)
-
-// 音频文件映射
-const audioMap: Record<string, string> = {
-  'j': '/src/res/j.mp3',
-  'n': '/src/res/n.mp3',
-  't': '/src/res/t.mp3',
-  'm': '/src/res/m.mp3',
-  '唱': '/src/res/唱.mp3',
-  '跳': '/src/res/跳.mp3',
-  'rp': '/src/res/rp.mp3',
-  'lq': '/src/res/lq.mp3',
-  'mck': '/src/res/mck.mp3',
-  'xs': '/src/res/xs.mp3',
-  '哇呵呵': '/src/res/哇呵呵.mp3',
-  '喜欢': '/src/res/喜欢.mp3',
-  'qm': '/src/res/qm.mp3',
-  'djh': '/src/res/djh.mp3',
-  'ws': '/src/res/ws.mp3',
-  '坤坤': '/src/res/坤坤.mp3',
-  'ngm': '/src/res/ngm.mp3',
-  'hh': '/src/res/hh.mp3',
-  'ay': '/src/res/ay.mp3',
-  'nhf': '/src/res/nhf.mp3',
-  'jntm': '/src/res/jntm.mp3',
-  'ngmhhy': '/src/res/ngmhhy.mp3',
-  'yhhmgn': '/src/res/yhhmgn.mp3',
-  'esj': '/src/res/esj.mp3',
-  'rup': '/src/res/rup.mp3',
-  'djj': '/src/res/djj.mp3',
-  'xxj': '/src/res/xxj.mp3',
-  'jhj': '/src/res/jhj.mp3',
-  'xjj': '/src/res/xjj.mp3',
-  'xnj': '/src/res/xnj.mp3',
-  'zdj': '/src/res/zdj.mp3',
-  'thj': '/src/res/thj.mp3',
-  'mrj': '/src/res/mrj.mp3',
-  'jnj': '/src/res/jnj.mp3',
-  'jjj': '/src/res/jjj.mp3',
-  'bbj': '/src/res/bbj.mp3',
-  'hxj': '/src/res/hxj.mp3',
-  'yyj': '/src/res/yyj.mp3',
-  'jtm': '/src/res/jtm.mp3',
-  '白娘鸡': '/src/res/白娘鸡.mp3',
-  '欢乐斗鸡主': '/src/res/欢乐斗鸡主.mp3',
-  '鸡鸡鸡太美': '/src/res/鸡鸡鸡太美.mp3',
-  '鸡你实在太煤': '/src/res/鸡你实在太煤.mp3',
-  '鸡你太美': '/src/res/鸡你太美.mp3',
-  '鸡年等一回': '/src/res/鸡年等一回.mp3',
-  '鸡上学': '/src/res/鸡上学.mp3',
-  '鸡塘月色': '/src/res/鸡塘月色.mp3',
-  '鸡r3': '/src/res/鸡r3.mp3',
-  '挤尼太霉': '/src/res/挤尼太霉.mp3',
-  '鲲乐净土': '/src/res/鲲乐净土.mp3',
-  '鲲物': '/src/res/鲲物.mp3',
-  '老虎鸡': '/src/res/老虎鸡.mp3',
-  '你干嘛手机铃声': '/src/res/你干嘛手机铃声.mp3',
-  '天鸡预报': '/src/res/天鸡预报.mp3',
-  '猪猪侠(鲲版)': '/src/res/猪猪侠(鲲版).mp3',
-  'Baby鸡': '/src/res/Baby鸡.mp3',
-  '学鸡叫': '/src/res/学鸡叫.mp3',
-  '新说唱Rap': '/src/res/新说唱Rap.mp3',
-  '爱坤的回忆': '/src/res/爱坤的回忆.mp3'
-}
-
-const startFunction = () => {
-  isPlaying.value = true
-  message.success('鸡乐盒已开始！')
-}
-
-const stopFunction = () => {
-  isPlaying.value = false
-  // 停止当前播放的音频
-  if (audioRef.value) {
-    audioRef.value.pause()
-    audioRef.value.currentTime = 0
-  }
-  message.info('鸡乐盒已停止！')
-}
-
-const playSound = (sound: string) => {
-  try {
-    const audioFile = audioMap[sound]
-    if (audioFile && audioRef.value) {
-      // 停止当前播放的音频
-      audioRef.value.pause()
-      audioRef.value.currentTime = 0
-
-      // 设置新的音频源
-      audioRef.value.src = audioFile
-
-      audioRef.value.play().then(() => {
-        // message.success(`正在播放: ${sound}`)
-      }).catch((error) => {
-        console.error('音频播放失败:', error)
-        message.error(`播放失败: ${sound}`)
-      })
-    } else {
-      message.info(`播放: ${sound} (音频文件未找到)`)
-    }
-  } catch (error) {
-    console.error('播放音频时出错:', error)
-    message.error(`播放出错: ${sound}`)
-  }
-}
-</script>
-
 <style scoped>
-.chicken-box {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
-
-.header-section {
-  text-align: center;
-  margin-bottom: 30px;
-  padding: 20px;
-  background: white;
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-}
-
-.title {
-  font-size: 18px;
-  color: #666;
-  margin: 0 0 10px 0;
-  font-weight: 500;
-}
-
-.main-title {
-  font-size: 32px;
-  color: #333;
-  margin: 0 0 20px 0;
-  font-weight: bold;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.control-buttons {
+.hero {
   display: flex;
-  justify-content: center;
-  gap: 15px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 34px 28px 0;
+  min-height: 250px;
 }
-
-.start-btn {
-  background: #52c41a;
-  border-color: #52c41a;
+.welcome {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #727186;
+}
+.welcome-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #8774c9;
+}
+.hero-copy h1 {
+  margin: 18px 0 15px;
+  font-size: clamp(30px, 4vw, 48px);
+  font-weight: 800;
+  letter-spacing: -1.8px;
+  line-height: 1.25;
+}
+.hero-description {
+  color: #858193;
+  font-size: 14px;
+  line-height: 1.9;
+}
+.random-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   color: white;
-  font-size: 16px;
-  height: 40px;
-  padding: 0 25px;
-  border-radius: 20px;
-  font-weight: 500;
+  background: var(--accent);
+  border: 0;
+  border-radius: 10px;
+  padding: 13px 21px;
+  margin-top: 22px;
+  font-size: 13px;
+  font-weight: 600;
 }
-
-.start-btn:hover {
-  background: #73d13d;
-  border-color: #73d13d;
+.random-button:hover {
+  background: #5645af;
 }
-
-.stop-btn {
-  background: #ff4d4f;
-  border-color: #ff4d4f;
-  color: white;
-  font-size: 16px;
-  height: 40px;
-  padding: 0 25px;
-  border-radius: 20px;
-  font-weight: 500;
+.random-button :deep(svg) {
+  width: 17px;
+  height: 17px;
 }
-
-.stop-btn:hover {
-  background: #ff7875;
-  border-color: #ff7875;
+.hero-art {
+  width: 320px;
+  height: 220px;
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
 }
-
-.function-grid {
+.record-sleeve {
+  width: 194px;
+  height: 202px;
+  position: relative;
+  background: #b9ace9;
+  border: 5px solid #c8bdef;
+  border-radius: 16px;
+  transform: rotate(10deg);
+  box-shadow:
+    12px 18px 0 #e8e3f6,
+    0 18px 25px #5949811a;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-}
-
-.button-row {
-  display: flex;
-  gap: 12px;
+  align-items: center;
   justify-content: center;
 }
-
-.function-btn {
-  flex: 1;
-  max-width: 120px;
-  height: 50px;
-  background: #1890ff;
-  border-color: #1890ff;
-  color: white;
-  font-size: 14px;
-  font-weight: 500;
-  border-radius: 12px;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(24, 144, 255, 0.2);
+.record {
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  background: repeating-radial-gradient(circle, #39344b 0 2px, #494258 3px 4px);
+  display: grid;
+  place-items: center;
+  border: 6px solid #39344b;
 }
-
-.function-btn:hover {
-  background: #40a9ff;
-  border-color: #40a9ff;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(24, 144, 255, 0.3);
+.record-label {
+  border: 4px solid #39344b;
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  background: #f5e4bc;
+  border-radius: 50%;
+  color: #5d5266;
 }
-
-.function-btn:active {
-  transform: translateY(0);
+.record-label :deep(svg) {
+  width: 21px;
+  height: 21px;
 }
-
-.wide-btn {
-  max-width: 150px;
+.sleeve-label {
+  font-size: 9px;
+  font-weight: 700;
+  color: #504563;
+  margin-top: 11px;
+  letter-spacing: 3px;
 }
-
-/* 响应式设计 */
-@media (max-width: 768px) {
-  .chicken-box {
-    padding: 15px;
-    margin: 10px;
+.sleeve-stripes {
+  position: absolute;
+  right: 11px;
+  top: 9px;
+  display: flex;
+  gap: 3px;
+  align-items: flex-end;
+  height: 13px;
+}
+.sleeve-stripes i {
+  width: 2px;
+  height: 7px;
+  background: #7f70ad;
+}
+.sleeve-stripes i:nth-child(2),
+.sleeve-stripes i:nth-child(4) {
+  height: 13px;
+}
+.art-note {
+  position: absolute;
+  color: #9a8ac7;
+  font-size: 38px;
+  font-weight: 700;
+}
+.note-one {
+  left: 9px;
+  top: 57px;
+  transform: rotate(-16deg);
+}
+.note-two {
+  right: 0;
+  bottom: 65px;
+  transform: rotate(13deg);
+}
+.art-caption {
+  position: absolute;
+  bottom: -4px;
+  color: #92879f;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+.signature-section {
+  margin-top: 14px;
+}
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  gap: 10px;
+}
+.section-heading h2 {
+  font-size: 21px;
+  font-weight: 750;
+}
+.keyboard-tip {
+  color: #92909f;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.keyboard-tip kbd {
+  border: 1px solid #e1dfe8;
+  border-radius: 4px;
+  background: white;
+  padding: 2px 5px;
+  font-family: inherit;
+}
+.mobile-tip {
+  display: none;
+  font-size: 11px;
+  color: var(--muted);
+}
+.signature-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+.board-note {
+  margin-top: 34px;
+  padding: 24px 0;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--line);
+  color: #9591a1;
+  font-size: 11px;
+}
+@media (max-width: 700px) {
+  .hero {
+    padding: 22px 0 30px;
   }
-
-  .main-title {
-    font-size: 24px;
+  .hero-art {
+    width: 220px;
+    transform: scale(0.85);
+    margin-right: -20px;
   }
-
-  .button-row {
-    gap: 8px;
+  .keyboard-tip {
+    display: none;
   }
-
-  .function-btn {
+  .mobile-tip {
+    display: block;
+  }
+  .signature-grid {
+    gap: 9px;
+  }
+  .board-note span {
+    display: none;
+  }
+}
+@media (max-width: 540px) {
+  .hero-art {
+    display: none;
+  }
+  .hero {
+    min-height: 225px;
+  }
+  .hero-copy h1 {
+    font-size: clamp(28px, 8.4vw, 36px);
+    margin-top: 16px;
+  }
+  .hero-description br {
+    display: none;
+  }
+  .hero-description {
     font-size: 12px;
-    height: 45px;
-    max-width: 80px;
-  }
-
-  .wide-btn {
-    max-width: 100px;
-  }
-}
-
-@media (max-width: 480px) {
-  .control-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .start-btn,
-  .stop-btn {
-    width: 120px;
-  }
-
-  .function-btn {
-    font-size: 11px;
-    height: 40px;
-    max-width: 70px;
-  }
-
-  .wide-btn {
-    max-width: 80px;
   }
 }
 </style>

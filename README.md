@@ -1,39 +1,37 @@
-# jiMusic
+# 鸡乐盒 pro
 
-This template should help get you started developing with Vue 3 in Vite.
+基于 Vue 3、TypeScript 和 Vite 的轻量音效盒，内置 59 个本地音效。
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
+## 开发与验证
 
 ```sh
 npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
 npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
+npm test
 npm run build
+npx eslint src
+npm run preview
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+## 使用
 
-```sh
-npm run lint
-```
+- 点击音效立即播放，再点同一个音效从头重播；切换音效时停止上一段。
+- 搜索名称或文件代号，按经典语录、鬼畜音效和整活单曲筛选。
+- 点击爱心收藏，收藏保存在当前浏览器，刷新后仍可使用。
+- 底部播放器支持暂停、继续、停止、拖动进度与音量调节。
+- 键盘 `1` / `2` / `3` / `4` 播放“鸡 / 你 / 太 / 美”，空格暂停或继续，`Esc` 停止。输入框编辑时不触发快捷键；聚焦按钮时空格保持按钮的原生操作。
+
+## 结构与性能
+
+- `src/data/sounds.ts`：音效目录，使用 Vite 资源导入生成支持部署路径的音频 URL。
+- `src/composables/useSoundPlayer.ts`：统一播放状态、请求竞态处理、资源释放和最多 8 个音频元素的缓存。
+- `src/components/soundboard/`：音效按钮、搜索分类收藏与播放器，播放进度变化不重新计算音效筛选。
+- `src/components/ChickenBox.vue`：组合音效面板并注册键盘交互。
+
+应用是单页面音效盒，入口仅加载 Vue 和实际使用的组件。保留原有依赖与模板文件，但不再全局注册未使用的 UI 组件库、路由和 store。
+
+音频按需加载，首屏渲染后仅预加载四个短音效；省流量或 2G 连接不预加载。59 个音频文件约 40.6 MB，会随构建输出，但浏览器不会在打开页面时下载整个音效库。首次播放未缓存的长音频仍取决于网络与浏览器解码速度。
+
+2026-10-06 本地生产构建对比：主 JavaScript 从 1,529.36 KB（gzip 474.19 KB）降至约 81 KB（gzip 33 KB）。这是资源体积对比，不代表实际播放延迟减少相同百分比。
+
+`npm test` 使用 Node 内置测试运行器和现有 TypeScript 依赖，不新增测试框架。测试执行实际播放器逻辑，以可控的音频对象验证连续点击、过期播放请求、暂停/停止、失败重试、缓存上限、预加载和卸载清理；页面与真实音频另外通过生产预览验证。
